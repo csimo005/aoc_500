@@ -21,15 +21,15 @@ fn main() {
     // Filter solutions
     let solutions: Vec<_> = empty()
         .chain(year2015())
-//        .chain(year2016())
-//        .chain(year2017())
-//        .chain(year2018())
-//        .chain(year2019())
-//        .chain(year2020())
-//        .chain(year2021())
-//        .chain(year2022())
-//        .chain(year2023())
-//       .chain(year2024())
+        //        .chain(year2016())
+        //        .chain(year2017())
+        //        .chain(year2018())
+        //        .chain(year2019())
+        //        .chain(year2020())
+        //        .chain(year2021())
+        //        .chain(year2022())
+        //        .chain(year2023())
+        //       .chain(year2024())
         .filter(|solution| year.is_none_or(|y: u32| y == solution.year))
         .filter(|solution| day.is_none_or(|d: u32| d == solution.day))
         .collect();
@@ -37,7 +37,13 @@ fn main() {
     // Pretty print output for each solution.
     let mut duration = Duration::ZERO;
 
-    for Solution { year, day, path, wrapper } in &solutions {
+    for Solution {
+        year,
+        day,
+        path,
+        wrapper,
+    } in &solutions
+    {
         if let Ok(data) = read_to_string(path) {
             let instant = Instant::now();
             let (part1, part2) = wrapper(data);
@@ -49,7 +55,10 @@ fn main() {
         } else {
             eprintln!("{BOLD}{RED}{year} Day {day:02}{RESET}");
             eprintln!("    Missing input!");
-            eprintln!("    Place input file in {BOLD}{WHITE}{}{RESET}", path.display());
+            eprintln!(
+                "    Place input file in {BOLD}{WHITE}{}{RESET}",
+                path.display()
+            );
         }
     }
 

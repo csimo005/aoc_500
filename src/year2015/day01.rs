@@ -18,8 +18,8 @@ pub fn part1(input: &[i32]) -> i32 {
 
 pub fn part2(input: &[i32]) -> usize {
     let mut total: i32 = 0;
-    for i in 0..input.len() {
-        total += input[i];
+    for (i, step) in input.iter().enumerate() {
+        total += step;
         if total == -1 {
             return i + 1;
         }
