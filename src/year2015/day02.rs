@@ -3,7 +3,7 @@ use std::cmp;
 pub fn parse(input: &str) -> Vec<i32> {
     let mut data = Vec::<i32>::new();
     for line in input.lines() {
-        for f in line.split("x") {
+        for f in line.split('x') {
             data.push(f.parse::<i32>().unwrap());
         }
     }

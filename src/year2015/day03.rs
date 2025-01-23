@@ -49,7 +49,7 @@ pub fn part1(input: &[Directions]) -> usize {
     let mut h: HashSet<Position> = HashSet::new();
     h.insert(pos);
 
-    for d in input.iter() {
+    for d in input {
         pos.step(*d);
         h.insert(pos);
     }

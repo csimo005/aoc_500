@@ -21,11 +21,7 @@ pub struct Gate {
 impl Gate {
     fn calculate_value(&self, lhs: Option<u16>, rhs: Option<u16>) -> Option<u16> {
         match self.op {
-            Operation::Const => if let Some(a) = lhs {
-                Some(a)
-            } else {
-                None
-            },
+            Operation::Const => lhs,
             Operation::And => if let (Some(a), Some(b)) = (lhs, rhs) {
                 Some(a & b)
             } else {
@@ -36,11 +32,7 @@ impl Gate {
             } else {
                 None
             },
-            Operation::Not => if let Some(a) = lhs {
-                Some(!a)
-            } else {
-                None
-            },
+            Operation::Not => lhs.map(|a| !a),
             Operation::RShift => if let (Some(a), Some(b)) = (lhs, rhs) {
                 Some(a >> b)
             } else {
@@ -117,10 +109,10 @@ pub fn parse(input: &str) -> Vec<Gate> {
 pub fn part1(input: &[Gate]) -> u16 {
     let mut lut = HashMap::<String, u16>::new();
 
-    let mut fin: bool = false;
+    let mut fin = false;
     while !fin {
         fin = true;
-        for g in input.iter() {
+        for g in input {
             if !lut.contains_key(&g.name) {
                 fin = false;
                 let lhs = match &g.inp_a {
@@ -146,7 +138,7 @@ pub fn part1(input: &[Gate]) -> u16 {
         }
     }
 
-    *lut.get("a").unwrap()
+    lut["a"]
 }
 
 pub fn part2(input: &[Gate]) -> u16 {
@@ -155,10 +147,10 @@ pub fn part2(input: &[Gate]) -> u16 {
     let mut lut = HashMap::<String, u16>::new();
     lut.insert("b".to_string(), prev_sol);
 
-    let mut fin: bool = false;
+    let mut fin = false;
     while !fin {
         fin = true;
-        for g in input.iter() {
+        for g in input {
             if !lut.contains_key(&g.name) {
                 fin = false;
                 let lhs = match &g.inp_a {
@@ -184,5 +176,5 @@ pub fn part2(input: &[Gate]) -> u16 {
         }
     }
 
-    *lut.get("a").unwrap()
+    lut["a"]
 }
